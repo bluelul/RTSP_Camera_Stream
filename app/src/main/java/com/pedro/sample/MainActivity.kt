@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.view.WindowManager
@@ -22,6 +23,8 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity(), ConnectCheckerRtsp, View.OnClickListener,
         SurfaceHolder.Callback {
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity(), ConnectCheckerRtsp, View.OnClickListen
   private val folder =
           File(Environment.getExternalStorageDirectory().absolutePath + "/rtmp-rtsp-stream-client-java")
 
-
+  private val TAG = ">>> MainActivity"
   private val PERMISSIONS = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA,
           Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -54,6 +57,18 @@ class MainActivity : AppCompatActivity(), ConnectCheckerRtsp, View.OnClickListen
     switch_camera.setOnClickListener(this)
     rtspServerCamera1 = RtspServerCamera1(surfaceView, this, 1935)
     surfaceView.holder.addCallback(this)
+
+    // autostart
+    Timer().schedule(2000) {
+      if (rtspServerCamera1!!.isRecording || rtspServerCamera1!!.prepareAudio() && rtspServerCamera1!!.prepareVideo()) {
+        rtspServerCamera1!!.startStream()
+        runOnUiThread{
+          button!!.setText(R.string.stop_button)
+          tv_url.text = rtspServerCamera1?.getEndPointConnection()
+        }
+        Log.i(TAG, "autostart DONE")
+      }
+    }
   }
 
   private fun hasPermissions(context: Context?, vararg permissions: String): Boolean {
