@@ -9,6 +9,7 @@ sudo apt update && sudo apt install mpv
 
 mpv rtsp:\\your.android.ip.address:1935
 ```
+- Editor: `bluelul`
 
 ## Original repo
 https://github.com/pedroSG94/RTSP-Server
