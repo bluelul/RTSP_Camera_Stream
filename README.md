@@ -1,10 +1,23 @@
 # RTSP-Server
 
+- Modified to stream camera immediately after open app, without pressing any button or monitor
+- Work well on embedded android devices
+- Access camera via mpv:
+```bash
+sudo add-apt-repository ppa:mc3man/mpv-tests
+sudo apt update && sudo apt install mpv
+
+mpv rtsp:\\android.ip.address:1935
+```
+
+## Original repo
+https://github.com/pedroSG94/RTSP-Server
+
 [![Release](https://jitpack.io/v/pedroSG94/RTSP-Server.svg)](https://jitpack.io/#pedroSG94/RTSP-Server)
 
 Plugin of rtmp-rtsp-stream-client-java to stream directly to RTSP player.
 
-## Compile
+### Compile
 
 To use this library in your project with gradle add this to your build.gradle:
 
