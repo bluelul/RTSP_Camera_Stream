@@ -7,7 +7,7 @@
 sudo add-apt-repository ppa:mc3man/mpv-tests
 sudo apt update && sudo apt install mpv
 
-mpv rtsp:\\android.ip.address:1935
+mpv rtsp:\\your.android.ip.address:1935
 ```
 
 ## Original repo
